@@ -39,6 +39,12 @@ app.get('/totalusers', async (req,res) => {
 app.post('/totalusers', async (req,res) => {
           try {
                 const newUser = req.body;
+                const query = { email: newUser.email }
+                const existingUser = await userFile.findOne(query);
+                if (existingUser) {
+                    //prevent add user information if already exists in database
+          return res.send({ message: 'user already exists', insertedId: 1 })
+                }
                 const result = await userFile.insertOne(newUser);
                 res.send(result)
           } catch (error) {
