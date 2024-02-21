@@ -20,6 +20,7 @@ const client = new MongoClient(uri, {
 
 const userFile = client.db('Totaluser').collection('UserInfos');
 
+// api for getting total user information Start
 app.get('/totalusers', async (req,res) => {
  try{
           const users = await userFile.find().toArray();
@@ -30,15 +31,25 @@ app.get('/totalusers', async (req,res) => {
    res.status(500).send('Internal Server Error')
  }
 } )
-app.get('/allmeals', async (req, res) => {
+// api for getting total user information End
+
+
+
+// api for insert new user information to database Start
+app.post('/totalusers', async (req,res) => {
           try {
-            const meals = await mealsFile.find().toArray();
-            res.send(meals);
+                const newUser = req.body;
+                const result = await userFile.insertOne(newUser);
+                res.send(result)
           } catch (error) {
-            console.error(error);
-            res.status(500).send('Internal Server Error');
+                console.log(error);
+                res.status(500).send('Internal Server Error');
           }
-        });
+       });
+// api for insert new user information to database End
+
+
+
 
   app.get('/', (req, res) => {
     res.send('Hello Bangladesh!')
