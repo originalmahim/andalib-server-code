@@ -68,6 +68,18 @@ app.get('/bags', async (req,res) => {
 } )
 // api for getting bags collection End ------
 
+//api for Cupon Code Start ----
+app.get('/cupons', async (req,res) => {
+  try {
+  const cupon = await cuponFile.find().toArray()
+            res.send(cupon);
+  } catch (error) {
+        console.log(error);
+        res.status(500).send('internal Server Error')    
+  }
+} )
+//api for Cupon Code End -----
+
 
 //api for load spesific bag information Start ------
 app.get('/bags/:id', async (req, res) => {
